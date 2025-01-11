@@ -1,0 +1,40 @@
+.hero-background {
+  background-color: #eee;
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-image: url('../img/image.png');
+}
+
+.hero-background:after {
+  background-color: #fff;
+}
+
+.navbar.scrolled {
+  background-color: rgba(255, 255, 255, 1);
+}
+
+
+.feature-icon {
+  font-size: 46px;
+  color: #444;
+}
+
+.nav-item .nav-link {
+  color: #444;
+  font-weight: bold;
+}
+
+.nav-item .nav-link.active {
+  color: #17b1ee;
+}
+
+.nav-item .nav-link {
+  margin: auto 10px;
+}
+
+.primary-btn {
+  background: #17b1ee !important;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 5px !important;
+}
