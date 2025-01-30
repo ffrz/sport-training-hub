@@ -84,7 +84,7 @@ class UserController extends Controller
             $user = new User();
             $message = 'Pengguna baru telah dibuat.';
         } else {
-            // username harus unik untuk masing-masing company_id, exclude id
+            // email harus unik
             $rules['email'] = "required|email|max:255|unique:users,email,{$request->id},id";
             if (empty($request->get('password'))) {
                 // kalau password tidak diisi, skip validation dan jangan update password
@@ -93,7 +93,7 @@ class UserController extends Controller
             }
             $request->validate($rules, $messages);
             $user = User::findOrFail($request->id);
-            $message = "Pengguna {$user->username} telah diperbarui.";
+            $message = "Pengguna {$user->email} telah diperbarui.";
         }
 
         if (!empty($password)) {
