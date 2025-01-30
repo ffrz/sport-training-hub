@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\AppUtilsController;
+use App\Http\Controllers\CoachController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\StudentController;
 use App\Http\Middleware\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -42,6 +44,28 @@ Route::middleware([Auth::class])->group(function () {
     //     Route::get('run', [TrainingController::class, 'run'])->name('training.run');
     //     Route::get('view', [TrainingController::class, 'view'])->name('training.view');
     // });
+
+    Route::prefix('management')->group(function () {
+        Route::prefix('students')->group(function () {
+            Route::get('', [StudentController::class, 'index'])->name('student.index');
+            Route::get('data', [StudentController::class, 'data'])->name('student.data');
+            Route::get('add', [StudentController::class, 'editor'])->name('student.add');
+            Route::get('duplicate/{id}', [StudentController::class, 'duplicate'])->name('student.duplicate');
+            Route::get('detail/{id}', [StudentController::class, 'detail'])->name('student.detail');
+            Route::get('edit/{id}', [StudentController::class, 'editor'])->name('student.edit');
+            Route::post('save', [StudentController::class, 'save'])->name('student.save');
+            Route::post('delete/{id}', [StudentController::class, 'delete'])->name('student.delete');
+        });
+
+        Route::prefix('coaches')->group(function () {
+            Route::get('', [CoachController::class, 'index'])->name('coach.index');
+            Route::get('data', [CoachController::class, 'data'])->name('coach.data');
+            Route::get('add', [CoachController::class, 'editor'])->name('coach.add');
+            Route::get('edit/{id}', [CoachController::class, 'editor'])->name('coach.edit');
+            Route::post('save', [CoachController::class, 'save'])->name('coach.save');
+            Route::post('delete/{id}', [CoachController::class, 'delete'])->name('coach.delete');
+        });
+    });
 
     Route::prefix('settings')->group(function () {
         Route::get('profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');

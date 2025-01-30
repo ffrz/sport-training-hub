@@ -22,6 +22,7 @@ return [
         'email' => 'Email',
         'phone' => 'No Telepon',
         'address' => 'Alamat',
+        'gender' => 'Jenis Kelamin',
     ],
 
 ];

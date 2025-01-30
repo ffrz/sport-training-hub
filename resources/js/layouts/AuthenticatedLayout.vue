@@ -190,7 +190,7 @@ const hasSubpath = computed(() => {
               <q-item-label>Dashboard</q-item-label>
             </q-item-section>
           </q-item>
-          <q-expansion-item
+          <!-- <q-expansion-item
             expand-separator
             icon="storage"
             label="Teknis"
@@ -222,30 +222,30 @@ const hasSubpath = computed(() => {
                 <q-item-label>Pelatih</q-item-label>
               </q-item-section>
             </q-item>
-          </q-expansion-item>
+          </q-expansion-item> -->
           <q-expansion-item
             expand-separator
             icon="storage"
             label="Manajemen"
-            :default-opened="$page.url.startsWith('/admin/settings')"
+            :default-opened="$page.url.startsWith('/management')"
           >
             <q-item
               clickable
               v-ripple
-              :active="$page.url.startsWith('/players')"
-              @click="router.get(route('player.index'))"
+              :active="$page.url.startsWith('/management/students')"
+              @click="router.get(route('student.index'))"
             >
               <q-item-section avatar>
                 <q-icon class="material-symbols-outlined">groups_2</q-icon>
               </q-item-section>
               <q-item-section>
-                <q-item-label>Pemain</q-item-label>
+                <q-item-label>Siswa</q-item-label>
               </q-item-section>
             </q-item>
-            <q-item
+            <!-- <q-item
               clickable
               v-ripple
-              :active="$page.url.startsWith('/coaches')"
+              :active="$page.url.startsWith('/management/coaches')"
               @click="router.get(route('coach.index'))"
             >
               <q-item-section avatar>
@@ -254,7 +254,7 @@ const hasSubpath = computed(() => {
               <q-item-section>
                 <q-item-label>Pelatih</q-item-label>
               </q-item-section>
-            </q-item>
+            </q-item> -->
           </q-expansion-item>
           <q-expansion-item
             expand-separator
@@ -290,7 +290,7 @@ const hasSubpath = computed(() => {
                 <q-item-label>Profil Saya</q-item-label>
               </q-item-section>
             </q-item>
-            <q-item
+            <!-- <q-item
               class="subnav"
               clickable
               v-ripple
@@ -303,7 +303,7 @@ const hasSubpath = computed(() => {
               <q-item-section>
                 <q-item-label>Profil Tim</q-item-label>
               </q-item-section>
-            </q-item>
+            </q-item> -->
           </q-expansion-item>
 
           <div class="absolute-bottom text-grey-6 q-pa-md">

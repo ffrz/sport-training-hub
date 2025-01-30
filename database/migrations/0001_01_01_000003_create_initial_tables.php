@@ -44,6 +44,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('phone');
             $table->boolean('active')->default(false);
+            $table->timestamps();
         });
 
         Schema::create('students', function (Blueprint $table) {
@@ -54,8 +55,9 @@ return new class extends Migration
             $table->string('address');
             $table->string('phone');
             $table->boolean('active')->default(false);
-            $table->date('registration_date');
-            $table->date('last_attendance_date');
+            $table->date('registration_date')->nullable()->default(null);
+            $table->date('last_attendance_date')->nullable()->default(null);
+            $table->timestamps();
         });
     }
 
