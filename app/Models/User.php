@@ -9,6 +9,13 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
+    const ROLE_ADMIN = 'admin';
+    const ROLE_COACH = 'coach';
+    const ROLE_PLAYER = 'player';
+    const ROLE_OWNER = 'owner';
+    const ROLE_TECHNICAL_MANAGER = 'technical_manager';
+    const ROLE_GENERAL_MANAGER = 'general_manager';
+
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
@@ -22,7 +29,9 @@ class User extends Authenticatable
         'email',
         'active',
         'password',
+        'role',
         'email_verified_at',
+        'google_id',
     ];
 
     /**
@@ -45,6 +54,31 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+        ];
+
+    }
+
+    public static function roles()
+    {
+        return [
+            self::ROLE_ADMIN,
+            self::ROLE_OWNER,
+            self::ROLE_GENERAL_MANAGER,
+            self::ROLE_TECHNICAL_MANAGER,
+            self::ROLE_COACH,
+            self::ROLE_PLAYER,
+        ];
+    }
+
+    public static function roleNames()
+    {
+        return [
+            self::ROLE_ADMIN => __('roles.' . self::ROLE_ADMIN),
+            self::ROLE_OWNER => __('roles.' . self::ROLE_OWNER),
+            self::ROLE_GENERAL_MANAGER => __('roles.' . self::ROLE_GENERAL_MANAGER),
+            self::ROLE_TECHNICAL_MANAGER => __('roles.' . self::ROLE_TECHNICAL_MANAGER),
+            self::ROLE_COACH => __('roles.' . self::ROLE_COACH),
+            self::ROLE_PLAYER => __('roles.' . self::ROLE_PLAYER),
         ];
     }
 }

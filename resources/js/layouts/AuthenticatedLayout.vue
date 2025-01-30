@@ -39,9 +39,9 @@ onMounted(() => {
   );
 
   // tutup aja drawernya, kan layar kecil kasian user
-  if ($q.screen.lt.md) {
-    leftDrawerOpen.value = false;
-  }
+  // if ($q.screen.lt.md) {
+  //  leftDrawerOpen.value = false;
+  // }
 
   // window.addEventListener("scroll", handleScroll);
 });
@@ -59,32 +59,29 @@ const hasSubpath = computed(() => {
 <template>
   <q-layout view="lHh LpR lFf">
     <q-header>
-      <q-toolbar
-        class="bg-grey-1 text-black toolbar-scrolled"
-
-      >
-          <q-btn
-            v-if="!$q.screen.lt.sm && !leftDrawerOpen"
-            flat
-            dense
-            aria-label="Menu"
-            @click="toggleLeftDrawer"
-          >
-            <q-icon class="material-symbols-outlined">dock_to_right</q-icon>
-          </q-btn>
-          <slot name="left-button"></slot>
-          <q-toolbar-title
-            :class="{ 'q-ml-sm': leftDrawerOpen }"
-            style="font-size: 18px"
-          >
-            <slot name="title">{{ $config.APP_NAME }}</slot>
-          </q-toolbar-title>
-          <slot name="right-button"></slot>
+      <q-toolbar class="bg-grey-1 text-black toolbar-scrolled">
+        <q-btn
+          v-if="!leftDrawerOpen"
+          flat
+          dense
+          aria-label="Menu"
+          @click="toggleLeftDrawer"
+        >
+          <q-icon class="material-symbols-outlined">dock_to_right</q-icon>
+        </q-btn>
+        <slot name="left-button"></slot>
+        <q-toolbar-title
+          :class="{ 'q-ml-sm': leftDrawerOpen }"
+          style="font-size: 18px"
+        >
+          <slot name="title">{{ $config.APP_NAME }}</slot>
+        </q-toolbar-title>
+        <slot name="right-button"></slot>
       </q-toolbar>
       <slot name="header"></slot>
     </q-header>
     <q-drawer
-      v-if="!$q.screen.lt.sm"
+      v-if="true || !$q.screen.lt.sm"
       v-model="leftDrawerOpen"
       bordered
       class="bg-grey-2"
@@ -193,45 +190,121 @@ const hasSubpath = computed(() => {
               <q-item-label>Dashboard</q-item-label>
             </q-item-section>
           </q-item>
-          <!-- <q-item
-            clickable
-            v-ripple
-            :active="$page.url.startsWith('/players')"
-            @click="router.get(route('player.index'))"
+          <q-expansion-item
+            expand-separator
+            icon="storage"
+            label="Teknis"
+            :default-opened="$page.url.startsWith('/admin/settings')"
           >
-            <q-item-section avatar>
-              <q-icon class="material-symbols-outlined">groups_2</q-icon>
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>Pemain</q-item-label>
-            </q-item-section>
-          </q-item>
-          <q-item
-            clickable
-            v-ripple
-            :active="$page.url.startsWith('/coaches')"
-            @click="router.get(route('coach.index'))"
+            <q-item
+              clickable
+              v-ripple
+              :active="$page.url.startsWith('/players')"
+              @click="router.get(route('player.index'))"
+            >
+              <q-item-section avatar>
+                <q-icon class="material-symbols-outlined">groups_2</q-icon>
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Pemain</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item
+              clickable
+              v-ripple
+              :active="$page.url.startsWith('/coaches')"
+              @click="router.get(route('coach.index'))"
+            >
+              <q-item-section avatar>
+                <q-icon class="material-symbols-outlined">group</q-icon>
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Pelatih</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-expansion-item>
+          <q-expansion-item
+            expand-separator
+            icon="storage"
+            label="Manajemen"
+            :default-opened="$page.url.startsWith('/admin/settings')"
           >
-            <q-item-section avatar>
-              <q-icon class="material-symbols-outlined">group</q-icon>
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>Pelatih</q-item-label>
-            </q-item-section>
-          </q-item> -->
-          <q-item
-            clickable
-            v-ripple
-            :active="$page.url.startsWith('/settings/profile')"
-            @click="router.get(route('profile.edit'))"
+            <q-item
+              clickable
+              v-ripple
+              :active="$page.url.startsWith('/players')"
+              @click="router.get(route('player.index'))"
+            >
+              <q-item-section avatar>
+                <q-icon class="material-symbols-outlined">groups_2</q-icon>
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Pemain</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item
+              clickable
+              v-ripple
+              :active="$page.url.startsWith('/coaches')"
+              @click="router.get(route('coach.index'))"
+            >
+              <q-item-section avatar>
+                <q-icon class="material-symbols-outlined">group</q-icon>
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Pelatih</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-expansion-item>
+          <q-expansion-item
+            expand-separator
+            icon="settings"
+            label="Pengaturan"
+            :default-opened="$page.url.startsWith('/settings')"
           >
-            <q-item-section avatar>
-              <q-icon class="material-symbols-outlined">account_circle</q-icon>
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>Profil Saya</q-item-label>
-            </q-item-section>
-          </q-item>
+            <q-item
+              class="subnav"
+              clickable
+              v-ripple
+              :active="$page.url.startsWith('/settings/users')"
+              @click="router.get(route('user.index'))"
+            >
+              <q-item-section avatar>
+                <q-icon name="group" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Pengguna</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item
+              class="subnav"
+              clickable
+              v-ripple
+              :active="$page.url.startsWith('/settings/profile')"
+              @click="router.get(route('profile.edit'))"
+            >
+              <q-item-section avatar>
+                <q-icon name="manage_accounts" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Profil Saya</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item
+              class="subnav"
+              clickable
+              v-ripple
+              :active="$page.url.startsWith('/settings/company-profile')"
+              @click="router.get(route('company-profile.edit'))"
+            >
+              <q-item-section avatar>
+                <q-icon name="apartment" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Profil Tim</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-expansion-item>
 
           <div class="absolute-bottom text-grey-6 q-pa-md">
             &copy; 2025 -
@@ -246,7 +319,7 @@ const hasSubpath = computed(() => {
       </q-page>
     </q-page-container>
     <!-- Footer hanya tampil jika di tampilan screen kecil, lihat di bagian style di bawah pada file ini -->
-    <q-footer v-if="!hasSubpath">
+    <q-footer v-if="false && !hasSubpath">
       <q-tabs
         v-model="activeTab"
         indicator-color="yellow"

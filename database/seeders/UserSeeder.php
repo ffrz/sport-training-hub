@@ -16,7 +16,6 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         UserFactory::$defaultPassword = Hash::make('12345');
-
-        User::factory(10)->create();
+        User::factory(20)->create();
     }
 }

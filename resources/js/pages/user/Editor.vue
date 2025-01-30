@@ -1,7 +1,7 @@
 <script setup>
 import { handleSubmit } from "@/helpers/client-req-handler";
 import { create_options } from "@/helpers/utils";
-import { validateUsername, validateEmail } from "@/helpers/validations";
+import { validateEmail } from "@/helpers/validations";
 import { router, useForm, usePage } from "@inertiajs/vue3";
 
 const roles = create_options(window.CONSTANTS.USER_ROLES);
@@ -10,7 +10,6 @@ const title = !!page.props.data.id ? 'Edit Pengguna' : 'Tambah Pengguna';
 const form = useForm({
   id: page.props.data.id,
   name: page.props.data.name,
-  username: page.props.data.username,
   email: page.props.data.email,
   password: "",
   role: !!page.props.data.role ? page.props.data.role : roles[0].value,
@@ -18,7 +17,7 @@ const form = useForm({
 });
 
 const submit = () =>
-  handleSubmit({form, url: route('admin.user.save')});
+  handleSubmit({form, url: route('user.save')});
 
 </script>
 
@@ -35,11 +34,6 @@ const submit = () =>
               <q-input autofocus v-model.trim="form.name" label="Nama" lazy-rules :error="!!form.errors.name"
                 :disable="form.processing" :error-message="form.errors.name" :rules="[
                   (val) => (val && val.length > 0) || 'Nama harus diisi.',
-                ]" />
-              <q-input v-model.trim="form.username" type="text" label="Username" lazy-rules
-                :disable="form.processing" :error="!!form.errors.username" :error-message="form.errors.username" :rules="[
-                  (val) => (val && val.length > 0) || 'IUsername harus diisi.',
-                  (val) => validateUsername(val) || 'Username tidak valid.'
                 ]" />
               <q-input v-model.trim="form.email" type="email" label="Email" lazy-rules :disable="form.processing"
                 :error="!!form.errors.email" :error-message="form.errors.email"
@@ -58,7 +52,7 @@ const submit = () =>
               <q-btn icon="save" type="submit" label="Simpan" color="primary" :disable="form.processing"
                 @click="submit" />
               <q-btn icon="cancel" label="Batal" class="text-black" :disable="form.processing"
-                @click="router.get(route('admin.user.index'))" />
+                @click="router.get(route('user.index'))" />
             </q-card-actions>
           </q-card>
         </q-form>

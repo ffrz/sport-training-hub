@@ -3,31 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\User;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Redirect;
-use Inertia\Inertia;
-use Inertia\Response;
 
 class ProfileController extends Controller
 {
     /**
      * Display the user's profile form.
      */
-    public function edit(Request $request): Response
+    public function edit(Request $request)
     {
-        return Inertia::render('profile/Edit');
+        return inertia('profile/Edit');
     }
 
     /**
      * Update the user's profile information.
      */
-    public function update(Request $request): RedirectResponse
+    public function update(Request $request)
     {
         $rules = [
             'name' => 'required|min:2|max:100',
@@ -59,7 +53,7 @@ class ProfileController extends Controller
     /**
      * Update the user's password.
      */
-    public function updatePassword(Request $request): RedirectResponse
+    public function updatePassword(Request $request)
     {
         $validated = $request->validate([
             'current_password' => ['required', 'current_password'],

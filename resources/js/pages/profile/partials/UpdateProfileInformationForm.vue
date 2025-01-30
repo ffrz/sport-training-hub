@@ -1,6 +1,6 @@
 <script setup>
 import { handleSubmit } from "@/helpers/client-req-handler";
-import { scrollToFirstErrorField } from "@/helpers/utils";
+import { create_options, scrollToFirstErrorField } from "@/helpers/utils";
 import { useForm, usePage } from "@inertiajs/vue3";
 import { ref } from "vue";
 
@@ -10,7 +10,9 @@ const user = page.props.auth.user;
 const form = useForm({
   name: user.name,
   email: user.email,
+  role: window.CONSTANTS.USER_ROLES[user.role],
 });
+
 
 const submit = () => handleSubmit({ form, url: route("profile.update") });
 </script>
@@ -41,6 +43,11 @@ const submit = () => handleSubmit({ form, url: route("profile.update") });
           readonly=""
           :disable="form.processing"
         />
+        <q-input
+          v-model="form.role"
+          label="Hak Akses"
+          readonly
+          :disable="form.processing" />
       </q-card-section>
       <q-card-section>
         <q-btn
