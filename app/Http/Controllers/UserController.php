@@ -76,7 +76,7 @@ class UserController extends Controller
         ];
         $user = null;
         $message = '';
-        $fields = ['name', 'email', 'active'];
+        $fields = ['name', 'email', 'active', 'role'];
         $password = $request->get('password');
         if (!$request->id) {
             $rules['email'] = "required|email|max:255|unique:users,email,NULL,id";
