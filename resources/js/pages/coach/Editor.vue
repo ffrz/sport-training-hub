@@ -11,7 +11,7 @@ const form = useForm({
   id: page.props.data.id,
   name: page.props.data.name,
   gender: page.props.data.gender,
-  birth_date: page.props.data.birth_date,
+  birth_date: page.props.data.birth_date ?? '',
   address: page.props.data.address,
   phone: page.props.data.phone,
   active: !!page.props.data.active,
@@ -25,9 +25,9 @@ const submit = () => handleSubmit({ form, url: route("coach.save") });
   <authenticated-layout>
     <template #title>{{ title }}</template>
     <div class="row justify-center">
-      <div class="col col-lg-6 q-pa-md">
+      <div class="col col-md-6 q-pa-sm">
         <q-form class="row" @submit.prevent="submit">
-          <q-card square flat bordered class="col q-pa-sm">
+          <q-card square flat bordered class="col">
             <q-card-section class="q-pt-none">
               <input type="hidden" name="id" v-model="form.id" />
               <q-input

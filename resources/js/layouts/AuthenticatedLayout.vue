@@ -291,7 +291,7 @@ const hasSubpath = computed(() => {
               class="subnav"
               clickable
               v-ripple
-              :active="$page.url.startsWith('/settings/settings.academy-profile')"
+              :active="$page.url.startsWith('/settings/academy-profile')"
               @click="router.get(route('settings.academy-profile'))"
             >
               <q-item-section avatar>

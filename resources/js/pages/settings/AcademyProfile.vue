@@ -24,17 +24,14 @@ const submit = () =>
       <q-btn icon="arrow_back" dense flat @click="router.get(route('dashboard'))" />
     </template>
     <template #title>{{ title }}</template>
-    <template #right-button v-if="$q.screen.lt.md">
-      <q-btn icon="logout" color="grey" label="Logout" dense @click="logout" />
-    </template>
     <div class="row justify-center">
-      <div class="col col-lg-6 q-py-md q-px-sm q-gutter-md">
+      <div class="col col-md-6 q-pa-sm q-px-sm">
         <q-form
           class="row"
           @submit.prevent="submit"
           @validation-error="scrollToFirstErrorField"
         >
-          <q-card square flat bordered class="col q-pa-sm">
+          <q-card square flat bordered class="col">
             <q-card-section>
               <div class="text-h6 q-my-xs text-subtitle1">Profil Akademi</div>
               <p class="text-caption text-grey-9">Perbarui profil Akademi.</p>

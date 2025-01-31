@@ -59,7 +59,6 @@ const emit = defineEmits(['update:modelValue']);
 const dateValue = ref('');
 
 onMounted(() => {
-  console.log(props.modelValue)
   if (props.modelValue !== '') {
     dateValue.value = props.modelValue;
   }

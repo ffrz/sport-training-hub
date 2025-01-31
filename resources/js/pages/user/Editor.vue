@@ -26,9 +26,9 @@ const submit = () =>
   <authenticated-layout>
     <template #title>{{ title }}</template>
     <div class="row justify-center">
-      <div class="col col-lg-6 q-pa-md">
+      <div class="col col-md-6 q-pa-sm">
         <q-form class="row" @submit.prevent="submit">
-          <q-card square flat bordered class="col q-pa-sm">
+          <q-card square flat bordered class="col">
             <q-card-section class="q-pt-none">
               <input type="hidden" name="id" v-model="form.id" />
               <q-input autofocus v-model.trim="form.name" label="Nama" lazy-rules :error="!!form.errors.name"

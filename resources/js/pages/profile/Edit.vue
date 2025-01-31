@@ -28,7 +28,7 @@ const logout = async () => {
       <q-btn icon="logout" color="grey" label="Logout" dense  @click="logout"/>
     </template>
     <div class="row justify-center">
-      <div class="col col-lg-6 q-py-md q-px-sm q-gutter-md">
+      <div class="col col-md-6 q-pa-sm q-col-gutter-sm">
         <UpdateProfileInformationForm />
         <UpdatePasswordForm />
       </div>
