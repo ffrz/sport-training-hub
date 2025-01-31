@@ -18,9 +18,8 @@
 </template>
 
 <script setup>
-import { ref, watch, defineProps, defineEmits } from 'vue';
+import { ref, watch, defineProps, defineEmits, onMounted } from 'vue';
 
-// Props passed from the parent
 const props = defineProps({
   modelValue: {
     type: String,
@@ -56,22 +55,23 @@ const props = defineProps({
   }
 });
 
-// Emits to update parent value
 const emit = defineEmits(['update:modelValue']);
-
-// Internal states for date and time
 const dateValue = ref('');
 
-// Watch for changes to modelValue (pickedDate) and sync with internal states
+onMounted(() => {
+  console.log(props.modelValue)
+  if (props.modelValue !== '') {
+    dateValue.value = props.modelValue;
+  }
+});
+
 watch(() => props.modelValue, (newValue) => {
   const [date, time] = newValue.split(' ');
   dateValue.value = date || '';
 });
 
-// Use the combined pickedDate for q-input value
 const pickedDate = ref(props.modelValue);
 
-// Update modelValue when either date or time changes
 const updateDate = () => {
   let val = '';
   if (dateValue.value) {
@@ -84,9 +84,4 @@ const updateDate = () => {
 
 </script>
 
-<style scoped>
-.cursor-pointer {
-  cursor: pointer;
-}
-</style>
 
