@@ -7,6 +7,7 @@ use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\StudentController;
 use App\Http\Middleware\Auth;
 use Illuminate\Support\Facades\Route;
@@ -64,6 +65,8 @@ Route::middleware([Auth::class])->group(function () {
             Route::get('edit/{id}', [CoachController::class, 'editor'])->name('coach.edit');
             Route::post('save', [CoachController::class, 'save'])->name('coach.save');
             Route::post('delete/{id}', [CoachController::class, 'delete'])->name('coach.delete');
+            Route::get('duplicate/{id}', [CoachController::class, 'duplicate'])->name('coach.duplicate');
+            Route::get('detail/{id}', [CoachController::class, 'detail'])->name('coach.detail');
         });
     });
 
@@ -71,6 +74,8 @@ Route::middleware([Auth::class])->group(function () {
         Route::get('profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::post('profile/update', [ProfileController::class, 'update'])->name('profile.update');
         Route::post('profile/update-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
+
+        Route::match(['get', 'post'], 'academy-profile', [SettingsController::class, 'academyProfile'])->name('settings.academy-profile');
 
         Route::prefix('users')->group(function () {
             Route::get('', [UserController::class, 'index'])->name('user.index');

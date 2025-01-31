@@ -17,11 +17,11 @@ defineComponent({
 
 <template>
   <q-layout view="hHh lpR fff" style="background: #f5f5f5">
-    <q-header elevated class="bg-primary text-white">
+    <q-header elevated class="bg-accent text-white">
       <q-toolbar style="max-width: 980px; margin: 0 auto">
         <q-toolbar-title align="center">
           <q-avatar class="">
-            <img src="/assets/images/logo-white.svg" />
+            <img src="/img/logo.png" />
           </q-avatar>
           <a
             class="q-pl-md text-white"

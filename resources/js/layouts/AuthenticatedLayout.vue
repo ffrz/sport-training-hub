@@ -153,13 +153,10 @@ const hasSubpath = computed(() => {
                 clickable
                 v-close-popup
                 v-ripple
-                @click="router.post(route('logout'))"
+                :href="route('logout')"
               >
                 <q-item-section>
-                  <q-item-label
-                    ><q-icon name="logout" class="q-mr-sm" />
-                    Logout</q-item-label
-                  >
+                  <q-item-label><q-icon name="logout" class="q-mr-sm" />Logout</q-item-label>
                 </q-item-section>
               </q-item>
             </q-list>
@@ -242,7 +239,7 @@ const hasSubpath = computed(() => {
                 <q-item-label>Siswa</q-item-label>
               </q-item-section>
             </q-item>
-            <!-- <q-item
+            <q-item
               clickable
               v-ripple
               :active="$page.url.startsWith('/management/coaches')"
@@ -254,7 +251,7 @@ const hasSubpath = computed(() => {
               <q-item-section>
                 <q-item-label>Pelatih</q-item-label>
               </q-item-section>
-            </q-item> -->
+            </q-item>
           </q-expansion-item>
           <q-expansion-item
             expand-separator
@@ -290,20 +287,20 @@ const hasSubpath = computed(() => {
                 <q-item-label>Profil Saya</q-item-label>
               </q-item-section>
             </q-item>
-            <!-- <q-item
+            <q-item
               class="subnav"
               clickable
               v-ripple
-              :active="$page.url.startsWith('/settings/company-profile')"
-              @click="router.get(route('company-profile.edit'))"
+              :active="$page.url.startsWith('/settings/settings.academy-profile')"
+              @click="router.get(route('settings.academy-profile'))"
             >
               <q-item-section avatar>
                 <q-icon name="apartment" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>Profil Tim</q-item-label>
+                <q-item-label>Profil Akademi</q-item-label>
               </q-item-section>
-            </q-item> -->
+            </q-item>
           </q-expansion-item>
 
           <div class="absolute-bottom text-grey-6 q-pa-md">

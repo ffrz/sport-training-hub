@@ -8,6 +8,11 @@ return new class extends Migration
 {
     public function up()
     {
+        Schema::create('settings', function (Blueprint $table) {
+            $table->string('key')->primary();
+            $table->text('value')->nullable()->default(null);
+        });
+
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('google_id')->nullable()->default(null);
@@ -68,5 +73,6 @@ return new class extends Migration
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
+        Schema::dropIfExists('settings');
     }
 };

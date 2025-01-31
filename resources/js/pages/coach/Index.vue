@@ -16,7 +16,7 @@ const statuses = [
 const page = usePage();
 const $q = useQuasar();
 const currentUser = page.props.auth.user;
-const title = "Siswa";
+const title = 'Pelatih';
 const rows = ref([]);
 const loading = ref(true);
 const showFilter = ref(false);
@@ -61,23 +61,25 @@ const fetchItems = (props = null) =>
     rows,
     loading,
     filter,
-    url: route("student.data"),
+    url: route("coach.data"),
   });
 
 const deleteItem = (row) =>
   handleDelete({
-    url: route("student.delete", row.id),
-    message: `Hapus siswa ${row.name}?`,
+    url: route("coach.delete", row.id),
+    message: `Hapus pelatih ${row.name}?`,
     fetchItemsCallback: fetchItems,
     loading,
   });
 
 const computedColumns = computed(() => {
   if ($q.screen.gt.sm) return columns;
-  return columns.filter((col) => col.name === "name" || col.name === "action");
+  return columns.filter(
+    (col) => col.name === "name" || col.name === "action"
+  );
 });
 
-const onRowClicked = (row) => router.get(route("student.detail", row.id));
+const onRowClicked = (row) => router.get(route("coach.detail", row.id));
 </script>
 
 <template>
@@ -89,7 +91,7 @@ const onRowClicked = (row) => router.get(route("student.detail", row.id));
         icon="add"
         dense
         color="primary"
-        @click="router.get(route('student.add'))"
+        @click="router.get(route('coach.add'))"
       />
       <q-btn
         class="q-ml-sm"
@@ -179,17 +181,11 @@ const onRowClicked = (row) => router.get(route("student.detail", row.id));
           >
             <q-td key="name" :props="props">
               <div class="elipsis" style="max-width: 200px">
+                {{ props.row.name }}
                 <q-icon
                   :name="props.row.gender == 'male' ? 'male' : 'female'"
                   :color="props.row.gender == 'male' ? 'blue' : 'pink'"
-                  class="q-mr-sm"
-                />{{ props.row.name }}
-              </div>
-              <div>
-                <q-icon name="calendar_month" class="q-mr-sm" />{{
-                  $dayjs().diff($dayjs(props.row.birth_date), "year")
-                }}
-                tahun ({{ $dayjs(props.row.birth_date).format("YYYY") }})
+                />
               </div>
             </q-td>
             <q-td key="action" :props="props">
@@ -217,7 +213,7 @@ const onRowClicked = (row) => router.get(route("student.detail", row.id));
                         v-ripple
                         v-close-popup
                         @click.stop="
-                          router.get(route('student.duplicate', props.row.id))
+                          router.get(route('coach.duplicate', props.row.id))
                         "
                       >
                         <q-item-section avatar>
@@ -230,7 +226,7 @@ const onRowClicked = (row) => router.get(route("student.detail", row.id));
                         v-ripple
                         v-close-popup
                         @click.stop="
-                          router.get(route('student.edit', props.row.id))
+                          router.get(route('coach.edit', props.row.id))
                         "
                       >
                         <q-item-section avatar>

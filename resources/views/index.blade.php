@@ -90,9 +90,9 @@
                 semuanya dalam satu platform yang mudah digunakan.
               </p>
             </div>
-            <a href="{{ route('register-options') }}"
+            <a href="{{ route('login') }}"
               class="btn btn-xl rounded-0 primary-btn my-5 me-3 shadow">
-              Demo
+              Masuk
             </a>
           </div>
         </div>
@@ -303,9 +303,9 @@
         Bergabunglah dengan <b>Sport Training Hub</b> dan rasakan kemudahan
         mengelola tim olahraga seperti belum pernah dilakukan sebelumnya.
       </p>
-      <a href="{{ route('register-options') }}"
+      <a href="{{ route('login') }}"
         class="btn btn-xl rounded-0 primary-btn my-5 me-3 shadow">
-        Demo
+        Masuk
       </a>
     </div>
   </main>
@@ -342,8 +342,6 @@
       } else {
         remove_class_on_scroll();
       }
-
-      console.log(scrollpos);
     });
   </script>
 </body>

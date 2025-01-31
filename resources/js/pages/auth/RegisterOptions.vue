@@ -18,7 +18,7 @@ import BtnLink from "@/components/BtnLink.vue";
             </q-card-section>
 
             <q-card-actions>
-              <div class="full-width q-my-md">
+              <div class="full-width">
                 <BtnLink
                   icon="email"
                   type="submit"
@@ -29,15 +29,8 @@ import BtnLink from "@/components/BtnLink.vue";
                 />
               </div>
             </q-card-actions>
-            <q-card-section
-                class="flex justify-center items-center q-px-sm q-py-xs"
-              >
-                <hr class="col line" />
-                <span class="col-auto q-mx-sm">Atau</span>
-                <hr class="col line" />
-              </q-card-section>
             <q-card-actions>
-              <div class="full-width q-my-md">
+              <div class="full-width">
                 <q-btn
                   icon="arrow_right"
                   type="submit"
@@ -48,6 +41,23 @@ import BtnLink from "@/components/BtnLink.vue";
                 />
               </div>
             </q-card-actions>
+            <q-card-section
+              class="flex justify-center items-center q-px-sm q-py-md"
+            >
+              <hr class="col line" />
+              <span class="col-auto q-mx-sm">Sudah Punya Akun?</span>
+              <hr class="col line" />
+              <div class="full-width q-mt-md">
+                <q-btn
+                  icon="arrow_right"
+                  type="submit"
+                  color="primary"
+                  class="full-width"
+                  label="Masuk"
+                  :href="route('login')"
+                />
+              </div>
+            </q-card-section>
           </q-card>
         </div>
       </div>

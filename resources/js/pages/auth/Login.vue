@@ -100,7 +100,7 @@ const submit = () => handleSubmit({ form, url: route("login") });
                   <q-btn
                     icon="login"
                     href="/auth/google/redirect"
-                    color="accent"
+                    color="red"
                     class="full-width"
                     label="Gunakan akun Google"
                     :disable="form.processing"
@@ -108,10 +108,10 @@ const submit = () => handleSubmit({ form, url: route("login") });
                 </div>
               </q-card-actions>
               <q-card-section class="text-center q-pa-none q-mt-md">
-                <p class="q-my-xs text-grey-7">
+                <!-- <p class="q-my-xs text-grey-7">
                   Belum punya akun?
                   <i-link :href="route('register-options')">Daftar</i-link>
-                </p>
+                </p> -->
                 <p class="q-my-xs text-grey-7">
                   Lupa kata sandi?
                   <i-link :href="route('password.request')">Atur ulang</i-link>

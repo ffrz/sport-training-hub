@@ -3,16 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\Coach;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+
 
 class CoachController extends Controller
 {
     public function index()
     {
-        return inertia('user/Index');
+        return inertia('coach/Index');
+    }
+
+    public function detail($id = 0)
+    {
+        return inertia('coach/Detail', [
+            'data' => Coach::findOrFail($id),
+        ]);
     }
 
     public function data(Request $request)
@@ -21,11 +27,11 @@ class CoachController extends Controller
         $orderType = $request->get('order_type', 'asc');
         $filter = $request->get('filter', []);
 
-        $q = User::query();
+        $q = Coach::query();
         $q->orderBy($orderBy, $orderType);
 
-        if (!empty($filter['role'] && $filter['role'] != 'all')) {
-            $q->where('role', '=', $filter['role']);
+        if (!empty($filter['gender']) && $filter['gender'] != null) {
+            $q->where('gender', '=', $filter['gender']);
         }
 
         if (!empty($filter['status']) && ($filter['status'] == 'active' || $filter['status'] == 'inactive')) {
@@ -35,28 +41,33 @@ class CoachController extends Controller
         if (!empty($filter['search'])) {
             $q->where(function ($query) use ($filter) {
                 $query->where('name', 'like', '%' . $filter['search'] . '%');
-                $query->orWhere('email', 'like', '%' . $filter['search'] . '%');
             });
         }
 
-        $users = $q->paginate($request->get('per_page', 10))->withQueryString();
+        $coachs = $q->paginate($request->get('per_page', 10))->withQueryString();
 
-        return response()->json($users);
+        return response()->json($coachs);
+    }
+
+    public function duplicate($id)
+    {
+        $item = coach::findOrFail($id);
+        $item->id = null;
+        $item->created_at = null;
+        return inertia('coach/Editor', [
+            'data' => $item,
+        ]);
     }
 
     public function editor($id = 0)
     {
-        $user = $id ? User::findOrFail($id) : new User();
-
+        $coach = $id ? coach::findOrFail($id) : new coach();
         if (!$id) {
-            $user->active = true;
-            $user->admin = true;
-        } else if ($user == Auth::user()) {
-            return redirect(route('user.index'))->with('warning', 'TIdak dapat mengubah akun anda sendiri.');
+            $coach->active = true;
         }
 
-        return inertia('user/Editor', [
-            'data' => $user,
+        return inertia('coach/Editor', [
+            'data' => $coach,
         ]);
     }
 
@@ -64,61 +75,37 @@ class CoachController extends Controller
     {
         $rules = [
             'name' => 'required|max:255',
-            'email' => 'email|min:3|max:100',
-            'password' => 'required|min:5|max:40',
+            'gender' => 'required',
+            'birth_date' => 'required|date',
+            'phone' => 'required',
+            'address' => 'required',
         ];
-        $messages = [
-            'name.required' => 'Nama pengguna harus diisi',
-            'name.max' => 'Nama pengguna maksimal 255 karakter',
-            'password.required' => 'Kata sandi harus diisi',
-            'password.min' => 'Kata sandi minimal 5 karakter',
-            'password.max' => 'Kata sandi maksimal 40 karakter',
-        ];
-        $user = null;
+        $coach = null;
         $message = '';
-        $fields = ['name', 'email', 'active', 'role'];
-        $password = $request->get('password');
+        $fields = ['name', 'gender', 'birth_date', 'phone', 'address', 'active'];
         if (!$request->id) {
-            $rules['email'] = "required|email|max:255|unique:users,email,NULL,id";
-            $request->validate($rules, $messages);
-            $user = new User();
-            $message = 'Pengguna baru telah dibuat.';
+            $request->validate($rules);
+            $coach = new Coach();
+            $message = 'Siswa baru telah dibuat.';
         } else {
-            // email harus unik
-            $rules['email'] = "required|email|max:255|unique:users,email,{$request->id},id";
-            if (empty($request->get('password'))) {
-                // kalau password tidak diisi, skip validation dan jangan update password
-                unset($rules['password']);
-                unset($fields['password']);
-            }
-            $request->validate($rules, $messages);
-            $user = User::findOrFail($request->id);
-            $message = "Pengguna {$user->email} telah diperbarui.";
+            $request->validate($rules);
+            $coach = coach::findOrFail($request->id);
+            $message = "Siswa {$coach->name} telah diperbarui.";
         }
 
-        if (!empty($password)) {
-            $user->password = Hash::make($password);
-        }
-        $user->fill($request->only($fields));
-        $user->save();
+        $coach->fill($request->only($fields));
+        $coach->save();
 
-        return redirect(route('user.index'))->with('success', $message);
+        return redirect(route('coach.index'))->with('success', $message);
     }
 
     public function delete($id)
     {
-        $user = User::findOrFail($id);
-
-        if ($user->id == Auth::user()->id) {
-            return response()->json([
-                'message' => 'Tidak dapat menghapus akun sendiri!'
-            ], 409);
-        }
-
-        $user->delete();
+        $coach = Coach::findOrFail($id);
+        $coach->delete();
 
         return response()->json([
-            'message' => "Pengguna {$user->email} telah dihapus!"
+            'message' => "Siswa {$coach->name} telah dihapus!"
         ]);
     }
 }

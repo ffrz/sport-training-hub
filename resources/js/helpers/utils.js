@@ -78,3 +78,16 @@ export async function scrollToFirstErrorField(ref) {
     element.focus();
   }
 }
+
+export function capitalizeFirstLetter(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+export function pointToRating(value) {
+  if (value >= 90) return 5;
+  if (value >= 80) return 4;
+  if (value >= 70) return 3;
+  if (value >= 60) return 2;
+  if (value >= 50) return 1;
+  return 0;
+}

@@ -20,14 +20,14 @@ Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback']);
 
 Route::middleware(NonAuthenticated::class)->group(function () {
 
-    Route::get('/auth/register-options', function () {
-        return inertia('auth/RegisterOptions');
-    })->name('register-options');
+    // Route::get('/auth/register-options', function () {
+    //     return inertia('auth/RegisterOptions');
+    // })->name('register-options');
 
-    Route::get('register', [RegisteredUserController::class, 'create'])
-        ->name('register');
+    // Route::get('register', [RegisteredUserController::class, 'create'])
+    //     ->name('register');
 
-    Route::post('register', [RegisteredUserController::class, 'store']);
+    // Route::post('register', [RegisteredUserController::class, 'store']);
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
         ->name('login');
@@ -66,6 +66,6 @@ Route::middleware([Auth::class])->group(function () {
 
     Route::put('password', [PasswordController::class, 'update'])->name('password.update');
 
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
+    Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
 });

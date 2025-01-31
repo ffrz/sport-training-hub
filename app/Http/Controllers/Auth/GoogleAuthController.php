@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Exception;
 
 class GoogleAuthController extends Controller
 {
@@ -26,6 +27,8 @@ class GoogleAuthController extends Controller
             $user->google_id = $googleUser->id;
             $user->save();
         } else {
+            abort(403, 'Akun anda belum terdaftar, silahkan hubungi Administrator.');
+
             $user = User::updateOrCreate(
                 ['google_id' => $googleUser->id],
                 [
@@ -36,6 +39,10 @@ class GoogleAuthController extends Controller
                     'active' => 1,
                 ]
             );
+        }
+
+        if (!$user->active) {
+            abort(403, 'Akun anda tidak aktif, hubungi Administrator.');
         }
 
         Auth::login($user);
