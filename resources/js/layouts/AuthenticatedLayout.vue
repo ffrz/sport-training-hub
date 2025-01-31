@@ -30,18 +30,18 @@ const toggleLeftDrawer = () => (leftDrawerOpen.value = !leftDrawerOpen.value);
 // }
 
 watch(leftDrawerOpen, (newValue) => {
-  localStorage.setItem("hourshub.layout.left-drawer-open", newValue);
+  // localStorage.setItem("hourshub.layout.left-drawer-open", newValue);
 });
 
 onMounted(() => {
-  leftDrawerOpen.value = JSON.parse(
-    localStorage.getItem("hourshub.layout.left-drawer-open")
-  );
+  // leftDrawerOpen.value = JSON.parse(
+  //   localStorage.getItem("hourshub.layout.left-drawer-open")
+  // );
 
   // tutup aja drawernya, kan layar kecil kasian user
-  // if ($q.screen.lt.md) {
-  //  leftDrawerOpen.value = false;
-  // }
+  if ($q.screen.lt.md) {
+   leftDrawerOpen.value = false;
+  }
 
   // window.addEventListener("scroll", handleScroll);
 });
