@@ -10,9 +10,21 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        allowed_roles([User::ROLE_ADMIN]);
+    }
+
     public function index()
     {
         return inertia('user/Index');
+    }
+
+    public function detail($id = 0)
+    {
+        return inertia('user/Detail', [
+            'data' => User::findOrFail($id),
+        ]);
     }
 
     public function data(Request $request)
@@ -46,9 +58,19 @@ class UserController extends Controller
 
     public function editor($id = 0)
     {
-        $user = $id ? User::findOrFail($id) : new User();
+        return $this->_edit($id ? User::findOrFail($id) : new User());
+    }
 
-        if (!$id) {
+    public function duplicate($id)
+    {
+        $user = User::findOrFail($id);
+        $user->id = null;
+        return $this->_edit($user);
+    }
+
+    protected function _edit($user)
+    {
+        if (!$user->id) {
             $user->active = true;
             $user->admin = true;
         } else if ($user == Auth::user()) {
@@ -67,20 +89,13 @@ class UserController extends Controller
             'email' => 'email|min:3|max:100',
             'password' => 'required|min:5|max:40',
         ];
-        $messages = [
-            'name.required' => 'Nama pengguna harus diisi',
-            'name.max' => 'Nama pengguna maksimal 255 karakter',
-            'password.required' => 'Kata sandi harus diisi',
-            'password.min' => 'Kata sandi minimal 5 karakter',
-            'password.max' => 'Kata sandi maksimal 40 karakter',
-        ];
         $user = null;
         $message = '';
         $fields = ['name', 'email', 'active', 'role'];
         $password = $request->get('password');
         if (!$request->id) {
             $rules['email'] = "required|email|max:255|unique:users,email,NULL,id";
-            $request->validate($rules, $messages);
+            $request->validate($rules);
             $user = new User();
             $message = 'Pengguna baru telah dibuat.';
         } else {
@@ -91,7 +106,7 @@ class UserController extends Controller
                 unset($rules['password']);
                 unset($fields['password']);
             }
-            $request->validate($rules, $messages);
+            $request->validate($rules);
             $user = User::findOrFail($request->id);
             $message = "Pengguna {$user->email} telah diperbarui.";
         }

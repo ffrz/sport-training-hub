@@ -221,10 +221,23 @@ const hasSubpath = computed(() => {
               @click="router.get(route('student.index'))"
             >
               <q-item-section avatar>
-                <q-icon class="material-symbols-outlined">groups_2</q-icon>
+                <q-icon class="material-symbols-outlined">group</q-icon>
               </q-item-section>
               <q-item-section>
                 <q-item-label>Siswa</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item
+              clickable
+              v-ripple
+              :active="$page.url.startsWith('/management/student-groups')"
+              @click="router.get(route('student-group.index'))"
+            >
+              <q-item-section avatar>
+                <q-icon class="material-symbols-outlined">groups_2</q-icon>
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>Grup Siswa</q-item-label>
               </q-item-section>
             </q-item>
             <q-item
@@ -234,7 +247,7 @@ const hasSubpath = computed(() => {
               @click="router.get(route('coach.index'))"
             >
               <q-item-section avatar>
-                <q-icon class="material-symbols-outlined">group</q-icon>
+                <q-icon class="material-symbols-outlined">person</q-icon>
               </q-item-section>
               <q-item-section>
                 <q-item-label>Pelatih</q-item-label>

@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Hash;
 
 class SettingsController extends Controller
 {
+    public function __construct()
+    {
+        allowed_roles([User::ROLE_ADMIN]);
+    }
 
     public function academyProfile(Request $request)
     {

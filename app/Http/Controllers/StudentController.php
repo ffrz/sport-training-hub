@@ -51,19 +51,21 @@ class StudentController extends Controller
 
     public function duplicate($id)
     {
-        $item = Student::findOrFail($id);
-        $item->id = null;
-        $item->created_at = null;
-        return inertia('student/Editor', [
-            'data' => $item,
-        ]);
+        $student = Student::findOrFail($id);
+        $student->id = null;
+        return $this->_editor($student);
     }
 
     public function editor($id = 0)
     {
-        $student = $id ? Student::findOrFail($id) : new Student();
-        if (!$id) {
+        return $this->_editor($id ? Student::findOrFail($id) : new Student());
+    }
+
+    protected function _editor($student)
+    {
+        if (!$student->id) {
             $student->active = true;
+            $student->created_at = null;
         }
 
         return inertia('student/Editor', [

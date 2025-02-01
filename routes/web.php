@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\StudentGroupController;
 use App\Http\Middleware\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -47,6 +48,17 @@ Route::middleware([Auth::class])->group(function () {
     // });
 
     Route::prefix('management')->group(function () {
+        Route::prefix('student-groups')->group(function () {
+            Route::get('', [StudentGroupController::class, 'index'])->name('student-group.index');
+            Route::get('data', [StudentGroupController::class, 'data'])->name('student-group.data');
+            Route::get('add', [StudentGroupController::class, 'editor'])->name('student-group.add');
+            Route::get('duplicate/{id}', [StudentGroupController::class, 'duplicate'])->name('student-group.duplicate');
+            Route::get('edit/{id}', [StudentGroupController::class, 'editor'])->name('student-group.edit');
+            Route::post('save', [StudentGroupController::class, 'save'])->name('student-group.save');
+            Route::post('delete/{id}', [StudentGroupController::class, 'delete'])->name('student-group.delete');
+            Route::get('detail/{id}', [StudentGroupController::class, 'detail'])->name('student-group.detail');
+        });
+
         Route::prefix('students')->group(function () {
             Route::get('', [StudentController::class, 'index'])->name('student.index');
             Route::get('data', [StudentController::class, 'data'])->name('student.data');
@@ -82,8 +94,10 @@ Route::middleware([Auth::class])->group(function () {
             Route::get('data', [UserController::class, 'data'])->name('user.data');
             Route::get('add', [UserController::class, 'editor'])->name('user.add');
             Route::get('edit/{id}', [UserController::class, 'editor'])->name('user.edit');
+            Route::get('duplicate/{id}', [UserController::class, 'duplicate'])->name('user.duplicate');
             Route::post('save', [UserController::class, 'save'])->name('user.save');
             Route::post('delete/{id}', [UserController::class, 'delete'])->name('user.delete');
+            Route::get('detail/{id}', [UserController::class, 'detail'])->name('user.detail');
         });
     });
 });

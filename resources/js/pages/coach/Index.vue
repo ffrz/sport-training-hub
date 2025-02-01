@@ -191,10 +191,6 @@ const onRowClicked = (row) => router.get(route("coach.detail", row.id));
             <q-td key="action" :props="props">
               <div class="flex justify-end">
                 <q-btn
-                  :disable="
-                    props.row.id == currentUser.id ||
-                    props.row.username == 'admin'
-                  "
                   icon="more_vert"
                   dense
                   flat

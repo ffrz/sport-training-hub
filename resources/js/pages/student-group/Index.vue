@@ -5,18 +5,10 @@ import { handleFetchItems, handleDelete } from "@/helpers/client-req-handler";
 import { create_gender_options } from "@/helpers/utils";
 import { useQuasar } from "quasar";
 
-const genders = create_gender_options();
-
-const statuses = [
-  { value: "all", label: "Semua" },
-  { value: "active", label: "Aktif" },
-  { value: "inactive", label: "Tidak Aktif" },
-];
-
 const page = usePage();
 const $q = useQuasar();
 const currentUser = page.props.auth.user;
-const title = "Siswa";
+const title = "Grup Siswa";
 const rows = ref([]);
 const loading = ref(true);
 const showFilter = ref(false);
@@ -37,7 +29,7 @@ const pagination = ref({
 const columns = [
   {
     name: "name",
-    label: "Nama",
+    label: "Nama Grup",
     field: "name",
     align: "left",
     sortable: true,
@@ -61,13 +53,13 @@ const fetchItems = (props = null) =>
     rows,
     loading,
     filter,
-    url: route("student.data"),
+    url: route("student-group.data"),
   });
 
 const deleteItem = (row) =>
   handleDelete({
-    url: route("student.delete", row.id),
-    message: `Hapus siswa ${row.name}?`,
+    url: route("student-group.delete", row.id),
+    message: `Hapus grup siswa ${row.name}?`,
     fetchItemsCallback: fetchItems,
     loading,
   });
@@ -77,7 +69,7 @@ const computedColumns = computed(() => {
   return columns.filter((col) => col.name === "name" || col.name === "action");
 });
 
-const onRowClicked = (row) => router.get(route("student.detail", row.id));
+const onRowClicked = (row) => router.get(route("student-group.detail", row.id));
 </script>
 
 <template>
@@ -89,7 +81,7 @@ const onRowClicked = (row) => router.get(route("student.detail", row.id));
         icon="add"
         dense
         color="primary"
-        @click="router.get(route('student.add'))"
+        @click="router.get(route('student-group.add'))"
       />
       <q-btn
         class="q-ml-sm"
@@ -102,30 +94,6 @@ const onRowClicked = (row) => router.get(route("student.detail", row.id));
     <template #header v-if="showFilter">
       <q-toolbar class="filter-bar">
         <div class="row q-col-gutter-xs items-center q-pa-sm full-width">
-          <q-select
-            v-model="filter.gender"
-            class="custom-select col-xs-12 col-sm-2"
-            :options="genders"
-            label="Jenis Kelamin"
-            dense
-            map-options
-            emit-value
-            outlined
-            style="min-width: 150px"
-            @update:model-value="onFilterChange"
-          />
-          <q-select
-            v-model="filter.status"
-            class="custom-select col-xs-12 col-sm-2"
-            :options="statuses"
-            label="Status"
-            dense
-            map-options
-            emit-value
-            outlined
-            style="min-width: 150px"
-            @update:model-value="onFilterChange"
-          />
           <q-input
             class="col"
             outlined
@@ -173,23 +141,12 @@ const onRowClicked = (row) => router.get(route("student.detail", row.id));
         <template v-slot:body="props">
           <q-tr
             :props="props"
-            :class="!props.row.active ? 'bg-red-1' : ''"
             @click="onRowClicked(props.row)"
             class="cursor-pointer"
           >
             <q-td key="name" :props="props">
               <div class="elipsis" style="max-width: 200px">
-                <q-icon
-                  :name="props.row.gender == 'male' ? 'male' : 'female'"
-                  :color="props.row.gender == 'male' ? 'blue' : 'pink'"
-                  class="q-mr-sm"
-                />{{ props.row.name }}
-              </div>
-              <div>
-                <q-icon name="calendar_month" class="q-mr-sm" />{{
-                  $dayjs().diff($dayjs(props.row.birth_date), "year")
-                }}
-                tahun ({{ $dayjs(props.row.birth_date).format("YYYY") }})
+                {{ props.row.name }}
               </div>
             </q-td>
             <q-td key="action" :props="props">
@@ -213,7 +170,7 @@ const onRowClicked = (row) => router.get(route("student.detail", row.id));
                         v-ripple
                         v-close-popup
                         @click.stop="
-                          router.get(route('student.duplicate', props.row.id))
+                          router.get(route('student-group.duplicate', props.row.id))
                         "
                       >
                         <q-item-section avatar>
@@ -226,7 +183,7 @@ const onRowClicked = (row) => router.get(route("student.detail", row.id));
                         v-ripple
                         v-close-popup
                         @click.stop="
-                          router.get(route('student.edit', props.row.id))
+                          router.get(route('student-group.edit', props.row.id))
                         "
                       >
                         <q-item-section avatar>

@@ -13,6 +13,21 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         DB::transaction(function () {
+            DB::table('student_groups')->insert([
+                [
+                    'name' => 'U12 Putra',
+                ],
+                [
+                    'name' => 'U12 Putri',
+                ],
+                [
+                    'name' => 'U14 Putra',
+                ],
+                [
+                    'name' => 'U14 Putri',
+                ],
+            ]);
+
             $this->call([
                 UserSeeder::class,
                 CoachSeeder::class,

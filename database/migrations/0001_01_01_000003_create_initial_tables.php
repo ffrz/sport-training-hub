@@ -41,6 +41,12 @@ return new class extends Migration
             $table->integer('last_activity')->index();
         });
 
+        Schema::create('student_groups', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->unique();
+            $table->timestamps();
+        });
+
         Schema::create('coaches', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -62,14 +68,32 @@ return new class extends Migration
             $table->boolean('active')->default(false);
             $table->date('registration_date')->nullable()->default(null);
             $table->date('last_attendance_date')->nullable()->default(null);
+            $table->foreignId('group_id')->nullable()->default(null);
             $table->timestamps();
+
+            $table->foreign('group_id')->references('id')->on('student_groups')->onDelete('restrict');
+        });
+
+        Schema::create('payments', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('student_id');
+            $table->decimal('amount', 8, 2);
+            $table->date('due_date')->nullable(true)->default(null);
+            $table->date('paid_date')->nullable(true)->default(null);
+            $table->enum('status', ['paid', 'unpaid']);
+            $table->text('notes')->nullable()->default(null);
+            $table->timestamps();
+
+            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
         });
     }
 
     public function down()
     {
+        Schema::dropIfExists('payments');
         Schema::dropIfExists('students');
         Schema::dropIfExists('coaches');
+        Schema::dropIfExists('student_groups');
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
