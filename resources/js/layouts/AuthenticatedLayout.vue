@@ -17,38 +17,26 @@ defineComponent({
 const $q = useQuasar();
 const page = usePage();
 const leftDrawerOpen = ref(
-  JSON.parse(localStorage.getItem("hourshub.layout.left-drawer-open"))
+  JSON.parse(localStorage.getItem("sth.layout.left-drawer-open"))
 );
 const isDropdownOpen = ref(false);
-// const isScrolled = ref(false);
 const activeTab = ref(null);
-
 const toggleLeftDrawer = () => (leftDrawerOpen.value = !leftDrawerOpen.value);
 
-// function handleScroll() {
-//   isScrolled.value = window.scrollY > 0;
-// }
-
 watch(leftDrawerOpen, (newValue) => {
-  // localStorage.setItem("hourshub.layout.left-drawer-open", newValue);
+  localStorage.setItem("sth.layout.left-drawer-open", newValue);
 });
 
 onMounted(() => {
-  // leftDrawerOpen.value = JSON.parse(
-  //   localStorage.getItem("hourshub.layout.left-drawer-open")
-  // );
+  leftDrawerOpen.value = JSON.parse(
+    localStorage.getItem("sth.layout.left-drawer-open")
+  );
 
   // tutup aja drawernya, kan layar kecil kasian user
   if ($q.screen.lt.md) {
    leftDrawerOpen.value = false;
   }
-
-  // window.addEventListener("scroll", handleScroll);
 });
-
-// onUnmounted(() => {
-//   window.removeEventListener("scroll", handleScroll);
-// });
 
 const hasSubpath = computed(() => {
   const segments = page.url.split("/").filter(Boolean); // Split the path and filter out empty segments
