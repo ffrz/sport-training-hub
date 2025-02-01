@@ -1,4 +1,5 @@
 import { usePage } from "@inertiajs/vue3";
+import dayjs from "dayjs";
 
 export function score_to_letter(score) {
   if (score >= 90) return "A";
@@ -58,7 +59,6 @@ export function create_options_v2(items, valueProp, labelProp) {
   });
 }
 
-
 export function create_options_from_users(items) {
   return items.map((user) => {
     return { 'value': user.id, 'label': `${user.username} - ${user.name}` };
@@ -90,4 +90,9 @@ export function pointToRating(value) {
   if (value >= 60) return 2;
   if (value >= 50) return 1;
   return 0;
+}
+
+export function calculateAge(date) {
+  // FIXME: perbaiki aturan penghitungan usia
+  return dayjs().diff(dayjs(date), "year");
 }

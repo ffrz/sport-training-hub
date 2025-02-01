@@ -4,20 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Student;
+use App\Models\StudentGroup;
 use Illuminate\Http\Request;
-
 
 class StudentController extends Controller
 {
     public function index()
     {
-        return inertia('student/Index');
+        return inertia('student/Index', [
+            'groups' => StudentGroup::orderBy('name', 'asc')->get(),
+        ]);
     }
 
     public function detail($id = 0)
     {
+        $data = Student::with('group')->findOrFail($id);
         return inertia('student/Detail', [
-            'data' => Student::findOrFail($id),
+            'data' => $data,
         ]);
     }
 
@@ -27,11 +30,15 @@ class StudentController extends Controller
         $orderType = $request->get('order_type', 'asc');
         $filter = $request->get('filter', []);
 
-        $q = Student::query();
+        $q = Student::with('group');
         $q->orderBy($orderBy, $orderType);
 
         if (!empty($filter['gender']) && $filter['gender'] != null) {
             $q->where('gender', '=', $filter['gender']);
+        }
+
+        if (!empty($filter['group_id']) && $filter['group_id'] != null) {
+            $q->where('group_id', '=', $filter['group_id']);
         }
 
         if (!empty($filter['status']) && ($filter['status'] == 'active' || $filter['status'] == 'inactive')) {
@@ -70,6 +77,7 @@ class StudentController extends Controller
 
         return inertia('student/Editor', [
             'data' => $student,
+            'groups' => StudentGroup::orderBy('name', 'asc')->get(),
         ]);
     }
 
@@ -84,7 +92,7 @@ class StudentController extends Controller
         ];
         $student = null;
         $message = '';
-        $fields = ['name', 'gender', 'birth_date', 'phone', 'address', 'active'];
+        $fields = ['name', 'gender', 'birth_date', 'phone', 'address', 'active', 'group_id'];
         if (!$request->id) {
             $request->validate($rules);
             $student = new Student();

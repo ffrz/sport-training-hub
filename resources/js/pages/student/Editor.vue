@@ -1,23 +1,29 @@
 <script setup>
 import { handleSubmit } from "@/helpers/client-req-handler";
-import { create_gender_options } from "@/helpers/utils";
+import { create_gender_options, create_options_v2, calculateAge } from "@/helpers/utils";
 import { router, useForm, usePage } from "@inertiajs/vue3";
 import DatePicker from "@/components/DatePicker.vue";
+import { computed } from "vue";
 
 const genders = create_gender_options();
 const page = usePage();
+const groups = create_options_v2(page.props.groups, "id", "name");
 const title = !!page.props.data.id ? "Edit Siswa" : "Tambah Siswa";
 const form = useForm({
   id: page.props.data.id,
   name: page.props.data.name,
+  group_id: page.props.data.group_id,
   gender: page.props.data.gender,
-  birth_date: page.props.data.birth_date ?? '',
+  birth_date: page.props.data.birth_date ?? "",
   address: page.props.data.address,
   phone: page.props.data.phone,
   active: !!page.props.data.active,
 });
 
 const submit = () => handleSubmit({ form, url: route("student.save") });
+const computedAge = computed(() => {
+  return form.birth_date ? calculateAge(form.birth_date) + ' tahun' : 'Tgl lahir belum diisi.';
+});
 </script>
 
 <template>
@@ -53,14 +59,32 @@ const submit = () => handleSubmit({ form, url: route("student.save") });
                 transition-hide="jump-up"
                 :error="!!form.errors.gender"
                 :error-message="form.errors.gender"
-              >
-              </q-select>
+              />
               <date-picker
-                  v-model="form.birth_date"
-                  label="Tanggal Lahir"
-                  :error="!!form.errors.birth_date"
-                  :disable="form.processing"
-                />
+                v-model="form.birth_date"
+                label="Tanggal Lahir"
+                :error="!!form.errors.birth_date"
+                :disable="form.processing"
+              />
+              <q-input
+                readonly
+                v-model="computedAge"
+                label="Usia"
+                error-message=""
+              />
+              <q-select
+                v-model="form.group_id"
+                label="Grup"
+                :options="groups"
+                map-options
+                emit-value
+                lazy-rules
+                :disable="form.processing"
+                transition-show="jump-up"
+                transition-hide="jump-up"
+                :error="!!form.errors.group_id"
+                :error-message="form.errors.group_id"
+              />
               <q-input
                 v-model.trim="form.phone"
                 label="Telepon"
@@ -69,6 +93,7 @@ const submit = () => handleSubmit({ form, url: route("student.save") });
                 :error="!!form.errors.phone"
                 :error-message="form.errors.phone"
               />
+
               <q-input
                 v-model.trim="form.address"
                 type="textarea"

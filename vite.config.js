@@ -9,8 +9,8 @@ export default defineConfig({
       output: {
         manualChunks: {
           vendor1: ['vue', 'quasar', 'lodash', 'dayjs', 'material-design-icons-iconfont', 'dexie'],
-          vendor2: ['vue-echarts'],
-          vendor3: ['echarts'],
+          // vendor2: ['vue-echarts'],
+          // vendor3: ['echarts'],
           // components: [
           //   '/resources/js/pages/admin/auth/Login.vue',
           //   '/resources/js/pages/admin/auth/Register.vue',

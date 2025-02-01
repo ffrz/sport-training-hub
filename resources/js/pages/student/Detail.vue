@@ -1,6 +1,6 @@
 <script setup>
 import { usePage } from "@inertiajs/vue3";
-import { capitalizeFirstLetter, format_gender, pointToRating } from '@/helpers/utils';
+import { capitalizeFirstLetter, format_gender, pointToRating, calculateAge } from '@/helpers/utils';
 import { ref } from "vue";
 
 const page = usePage();
@@ -100,6 +100,11 @@ rating.value = pointToRating(total);
                     <td>{{ page.props.data.name }}</td>
                   </tr>
                   <tr>
+                    <td>Grup</td>
+                    <td>:</td>
+                    <td>{{ page.props.data.group ? page.props.data.group.name : 'Belum dipilih' }}</td>
+                  </tr>
+                  <tr>
                     <td>Jenis Kelamin</td>
                     <td>:</td>
                     <td>{{ format_gender(page.props.data.gender) }}</td>
@@ -135,12 +140,7 @@ rating.value = pointToRating(total);
                     <td>Usia</td>
                     <td>:</td>
                     <td>
-                      {{
-                        $dayjs().diff(
-                          $dayjs(page.props.data.birth_date),
-                          "year"
-                        )
-                      }}
+                      {{ calculateAge(page.props.data.birth_date) }}
                       tahun
                     </td>
                   </tr>

@@ -15,6 +15,7 @@ class Student extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'group_id',
         'name',
         'gender',
         'birth_date',
@@ -24,4 +25,9 @@ class Student extends Model
         'registration_date',
         'last_attendance_date',
     ];
+
+    public function group()
+    {
+        return $this->belongsTo(StudentGroup::class, 'group_id', 'id');
+    }
 }

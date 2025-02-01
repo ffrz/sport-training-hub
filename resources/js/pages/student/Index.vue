@@ -2,18 +2,21 @@
 import { computed, onMounted, reactive, ref } from "vue";
 import { router, usePage } from "@inertiajs/vue3";
 import { handleFetchItems, handleDelete } from "@/helpers/client-req-handler";
-import { create_gender_options } from "@/helpers/utils";
+import { create_gender_options, create_options_v2 } from "@/helpers/utils";
 import { useQuasar } from "quasar";
 
+const page = usePage();
 const genders = create_gender_options();
-
+const groups = [
+  { value: null, label: 'Semua' },
+  ...create_options_v2(page.props.groups, 'id', 'name')
+];
 const statuses = [
   { value: "all", label: "Semua" },
   { value: "active", label: "Aktif" },
   { value: "inactive", label: "Tidak Aktif" },
 ];
 
-const page = usePage();
 const $q = useQuasar();
 const currentUser = page.props.auth.user;
 const title = "Siswa";
@@ -22,6 +25,7 @@ const loading = ref(true);
 const showFilter = ref(false);
 const filter = reactive({
   gender: null,
+  group_id: null,
   status: "active",
   search: "",
 });
@@ -107,6 +111,18 @@ const onRowClicked = (row) => router.get(route("student.detail", row.id));
             class="custom-select col-xs-12 col-sm-2"
             :options="genders"
             label="Jenis Kelamin"
+            dense
+            map-options
+            emit-value
+            outlined
+            style="min-width: 150px"
+            @update:model-value="onFilterChange"
+          />
+          <q-select
+            v-model="filter.group_id"
+            class="custom-select col-xs-12 col-sm-2"
+            :options="groups"
+            label="Grup"
             dense
             map-options
             emit-value
