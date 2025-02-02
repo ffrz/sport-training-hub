@@ -3,8 +3,8 @@
     "file": "assets/vendor1-B66eveH2.css",
     "src": "_vendor1-!~{003}~.js"
   },
-  "_vendor1-BS7bo3vt.js": {
-    "file": "assets/vendor1-BS7bo3vt.js",
+  "_vendor1-AMA6-iHZ.js": {
+    "file": "assets/vendor1-AMA6-iHZ.js",
     "name": "vendor1",
     "css": [
       "assets/vendor1-B66eveH2.css"
@@ -15,14 +15,6 @@
       "assets/MaterialIcons-Regular-FsbMSDLx.woff",
       "assets/MaterialIcons-Regular-DEUTIz1o.ttf"
     ]
-  },
-  "_vendor2-l0sNRNKZ.js": {
-    "file": "assets/vendor2-l0sNRNKZ.js",
-    "name": "vendor2"
-  },
-  "_vendor3-l0sNRNKZ.js": {
-    "file": "assets/vendor3-l0sNRNKZ.js",
-    "name": "vendor3"
   },
   "node_modules/@quasar/extras/material-icons/web-font/flUhRq6tzZclQEJ-Vdg-IuiaDsNa.woff": {
     "file": "assets/flUhRq6tzZclQEJ-Vdg-IuiaDsNa-Dr0goTwe.woff",
@@ -54,15 +46,15 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-1SDvrVUV.js",
+    "file": "assets/app-CHF4IupF.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "imports": [
-      "_vendor1-BS7bo3vt.js"
+      "_vendor1-AMA6-iHZ.js"
     ],
     "css": [
-      "assets/app-DHRzXprk.css"
+      "assets/app-CGG7NRVb.css"
     ],
     "assets": [
       "assets/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ-D-x-0Q06.woff2",

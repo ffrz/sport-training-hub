@@ -4,6 +4,7 @@ import DatePicker from "@/components/DatePicker.vue";
 import { handleSubmit } from "@/helpers/client-req-handler";
 import { scrollToFirstErrorField } from "@/helpers/utils";
 import { useForm, usePage } from "@inertiajs/vue3";
+import LocaleNumberInput from "@/components/LocaleNumberInput.vue";
 
 const title = "Profil Akademi";
 const page = usePage();
@@ -11,6 +12,7 @@ const form = useForm({
   academy_name: page.props.data.academy_name,
   founded_date: page.props.data.founded_date,
   owner_name: page.props.data.owner_name,
+  fee_amount: page.props.data.fee_amount,
 });
 
 const submit = () =>
@@ -39,16 +41,19 @@ const submit = () =>
                 :disable="form.processing"
                 :error="!!form.errors.academy_name"
                 :error-message="form.errors.academy_name"
-                :rules="[(val) => (val && val.length > 0) || 'Nama Akademi harus diisi.']"
+                :rules="[
+                  (val) =>
+                    (val && val.length > 0) || 'Nama Akademi harus diisi.',
+                ]"
               />
               <date-picker
-                  v-model="form.founded_date"
-                  label="Tanggal Didirikan"
-                  lazy-rules
-                  :error="!!form.errors.founded_date"
-                  :error-message="form.errors.founded_date"
-                  :disable="form.processing"
-                />
+                v-model="form.founded_date"
+                label="Tanggal Didirikan"
+                lazy-rules
+                :error="!!form.errors.founded_date"
+                :error-message="form.errors.founded_date"
+                :disable="form.processing"
+              />
               <q-input
                 v-model.trim="form.owner_name"
                 label="Nama Pemilik"
@@ -56,7 +61,21 @@ const submit = () =>
                 :disable="form.processing"
                 :error="!!form.errors.name"
                 :error-message="form.errors.name"
-                :rules="[(val) => (val && val.length > 0) || 'Nama Pemilik harus diisi.']"
+                :rules="[
+                  (val) =>
+                    (val && val.length > 0) || 'Nama Pemilik harus diisi.',
+                ]"
+              />
+              <LocaleNumberInput
+                v-model:modelValue="form.fee_amount"
+                label="Besar Iuran"
+                lazyRules
+                :disable="form.processing"
+                :error="!!form.errors.fee_amount"
+                :errorMessage="form.errors.fee_amount"
+                :rules="[
+                  (val) => (val && val.length > 0) || 'Besar Iuran harus diisi.',
+                ]"
               />
             </q-card-section>
             <q-card-section>

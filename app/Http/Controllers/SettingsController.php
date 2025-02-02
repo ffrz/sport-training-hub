@@ -23,6 +23,7 @@ class SettingsController extends Controller
                 'academy_name' => 'required|min:2|max:100',
                 'founded_date' => 'required',
                 'owner_name' => 'required|min:2|max:100',
+                'fee_amount' => 'required'
             ];
             $request->validate($rules);
 
@@ -30,6 +31,7 @@ class SettingsController extends Controller
                 'academy.name' => $request->get('academy_name'),
                 'academy.founded_date' => $request->get('founded_date'),
                 'academy.owner_name' => $request->get('owner_name'),
+                'academy.fee_amount' => $request->get('fee_amount'),
             ]);
             $request->session()->flash('success', 'Profil Akademi berhasil diperbarui.');
             return back();
@@ -39,6 +41,7 @@ class SettingsController extends Controller
             'academy_name' => Setting::get('academy.name', 'My Training Hub'),
             'founded_date' => Setting::get('academy.founded_date', '2010-01-01'),
             'owner_name' => Setting::get('academy.owner_name', 'John Doe'),
+            'fee_amount' => Setting::get('academy.fee_amount', 'Fee Amount'),
         ];
 
         return inertia('settings/AcademyProfile', [
