@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\DB;
 
 class Coach extends Model
 {
@@ -22,4 +23,9 @@ class Coach extends Model
         'phone',
         'active',
     ];
+
+    public static function getActiveCount()
+    {
+        return DB::select("SELECT COUNT(0) as `count` FROM `coaches` WHERE `active`=1")[0]->count;
+    }
 }

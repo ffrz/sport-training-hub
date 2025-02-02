@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -80,5 +81,10 @@ class User extends Authenticatable
             self::ROLE_COACH => __('roles.' . self::ROLE_COACH),
             self::ROLE_PLAYER => __('roles.' . self::ROLE_PLAYER),
         ];
+    }
+
+    public static function getActiveCount()
+    {
+        return DB::select("SELECT COUNT(0) as `count` FROM `users` WHERE `active`=1")[0]->count;
     }
 }

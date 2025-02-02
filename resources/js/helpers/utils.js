@@ -96,3 +96,26 @@ export function calculateAge(date) {
   // FIXME: perbaiki aturan penghitungan usia
   return dayjs().diff(dayjs(date), "year");
 }
+
+export const formatNumber = (value, locale = 'id-ID', maxDecimals = 0) => {
+  let number = value;
+
+  if (number === null || number === undefined || isNaN(number)) {
+    number = 0;
+  }
+
+  return new Intl.NumberFormat(locale, {
+    minimumFractionDigits: maxDecimals,
+    maximumFractionDigits: maxDecimals,
+  }).format(number);
+};
+
+export const getQueryParams = (...args) => {
+  const page = usePage();
+  let queryString = page.url;
+  if (queryString.indexOf("?") === -1) {
+    return {};
+  }
+  queryString = queryString.substring(queryString.indexOf("?") + 1);
+  return Object.assign(Object.fromEntries(new URLSearchParams(queryString)), ...args);
+}
